@@ -33,10 +33,12 @@ namespace FileWatcher
 
         protected override void OnStart(string[] args)
         {
+            eventLog.WriteEntry("Filewatcher started!");
         }
 
         protected override void OnStop()
         {
+            eventLog.WriteEntry("Filewatcher terminated!");
         }
     }
 }
