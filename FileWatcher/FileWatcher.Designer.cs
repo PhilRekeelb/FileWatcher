@@ -1,6 +1,6 @@
 ﻿namespace FileWatcher
 {
-    partial class Service1
+    partial class FileWatcher
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            // 
+            // FileWatcher
+            // 
+            this.ServiceName = "FileWatcher";
+
         }
 
         #endregion

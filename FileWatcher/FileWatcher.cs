@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace FileWatcher
 {
-    public partial class Service1 : ServiceBase
+    public partial class FileWatcher : ServiceBase
     {
-        public Service1()
+        public FileWatcher()
         {
             InitializeComponent();
         }
