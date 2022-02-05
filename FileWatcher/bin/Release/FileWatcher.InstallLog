@@ -1,0 +1,43 @@
+﻿Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird installiert.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Dienst FileWatcher wird installiert...
+Dienst FileWatcher wurde installiert.
+Die EventLog-Quelle FileWatcher im Protokoll Application wird erstellt...
+Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird ausgeführt.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird deinstalliert.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Die EventLog-Quelle FileWatcher wird entfernt.
+Der Dienst FileWatcher wird vom System entfernt...
+Dienst FileWatcher wurde vom System entfernt.
+Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird installiert.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Dienst FileWatcher wird installiert...
+Die EventLog-Quelle FileWatcher im Protokoll Application wird erstellt...
+Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird zurückgesetzt.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Der vorherige Zustand des Ereignisprotokolls für die Quelle FileWatcher wird wiederhergestellt.
+Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe wird deinstalliert.
+Betroffene Parameter:
+   logtoconsole = 
+   logfile = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog
+   assemblypath = D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
+Die EventLog-Quelle FileWatcher wird entfernt.
+Warnung: Die Quelle FileWatcher ist nicht auf dem lokalen Computer registriert.
+Der Dienst FileWatcher wird vom System entfernt...
+Dienst FileWatcher wurde vom System entfernt.
