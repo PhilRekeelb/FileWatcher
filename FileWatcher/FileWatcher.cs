@@ -16,6 +16,7 @@ namespace FileWatcher
     {
         private static String EVENTSOURCE = "FileWatcher";
         private static String LOGNAME = "Application";
+        private static String PATH = @"D:\Downloads";
 
         public FileWatcher()
         {
@@ -36,6 +37,7 @@ namespace FileWatcher
             {
                 EventLog.WriteEntry(LOGNAME, ex.ToString(), EventLogEntryType.Error);
             }
+
         }
 
         protected override void OnStart(string[] args)
@@ -45,6 +47,12 @@ namespace FileWatcher
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+            if (System.IO.Directory.Exists(PATH))
+            {
+                fileSystemWatcher.Path = PATH;
+                eventLog.WriteEntry(PATH);
+            }
 
             eventLog.WriteEntry("Filewatcher started!");
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
@@ -61,6 +69,16 @@ namespace FileWatcher
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(System.IntPtr handle, ref ServiceStatus serviceStatus);
+
+        private void fileSystemWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
+        {
+            eventLog.WriteEntry("File created!");
+        }
+
+        private void fileSystemWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
+        {
+            eventLog.WriteEntry("File changed!");
+        }
     }
 
     public enum ServiceState
