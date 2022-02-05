@@ -10,7 +10,7 @@
 *.cachefile
 
 # Visual Studio foldes
-FileWatcher/bin/Debug/
+FileWatcher/bin/
 .vs/
 
 # Docoumentation
