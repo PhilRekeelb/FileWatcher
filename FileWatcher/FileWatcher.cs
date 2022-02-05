@@ -14,34 +14,39 @@ namespace FileWatcher
     //https://docs.microsoft.com/de-de/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
     public partial class FileWatcher : ServiceBase
     {
-        private static String EVENTSOURCE = "Filewatcher";
+        private static String EVENTSOURCE = "FileWatcher";
         private static String LOGNAME = "Application";
 
         public FileWatcher()
         {
             InitializeComponent();
 
-            eventLog = new System.Diagnostics.EventLog();
-            if(!System.Diagnostics.EventLog.Exists(EVENTSOURCE))
+            try
             {
-                System.Diagnostics.EventLog.CreateEventSource(EVENTSOURCE, LOGNAME);
+                eventLog = new System.Diagnostics.EventLog();
+                if (!System.Diagnostics.EventLog.SourceExists(EVENTSOURCE))
+                {
+                    System.Diagnostics.EventLog.CreateEventSource(EVENTSOURCE, LOGNAME);
+                }
+
+                eventLog.Source = EVENTSOURCE;
+                eventLog.Log = LOGNAME;
             }
-
-            eventLog.Source = EVENTSOURCE;
-            eventLog.Log = LOGNAME;
-
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(LOGNAME, ex.ToString(), EventLogEntryType.Error);
+            }
         }
 
         protected override void OnStart(string[] args)
         {
+            eventLog.WriteEntry("Filewatcher starting...");
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-
             eventLog.WriteEntry("Filewatcher started!");
-
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
@@ -49,7 +54,6 @@ namespace FileWatcher
         protected override void OnStop()
         {
             eventLog.WriteEntry("Filewatcher terminated!");
-
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);

@@ -26,14 +26,11 @@ Die Installationsphase wird gestartet.
 Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
 Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
 
-Während der Installationsphase ist eine Ausnahme aufgetreten.
-System.ComponentModel.Win32Exception: Der angegebene Dienst wurde zum Löschen markiert
-
-Die Rollbackphase der Installation wird gestartet.
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
 Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
 Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
 
-Die Rollbackphase wurde erfolgreich abgeschlossen.
+Die Commitphase wurde erfolgreich abgeschlossen.
 
 Die transaktive Installation ist abgeschlossen.
 
@@ -43,3 +40,101 @@ Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\F
 Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
 
 Die Deinstallation ist abgeschlossen.
+
+Eine transaktive Installation wird ausgeführt.
+
+Die Installationsphase wird gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Commitphase wurde erfolgreich abgeschlossen.
+
+Die transaktive Installation ist abgeschlossen.
+
+
+Die Deinstallation wurde gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Deinstallation ist abgeschlossen.
+
+Eine transaktive Installation wird ausgeführt.
+
+Die Installationsphase wird gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Commitphase wurde erfolgreich abgeschlossen.
+
+Die transaktive Installation ist abgeschlossen.
+
+
+Die Deinstallation wurde gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Deinstallation ist abgeschlossen.
+
+Eine transaktive Installation wird ausgeführt.
+
+Die Installationsphase wird gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Commitphase wurde erfolgreich abgeschlossen.
+
+Die transaktive Installation ist abgeschlossen.
+
+
+Die Deinstallation wurde gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Deinstallation ist abgeschlossen.
+
+Eine transaktive Installation wird ausgeführt.
+
+Die Installationsphase wird gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Commitphase wurde erfolgreich abgeschlossen.
+
+Die transaktive Installation ist abgeschlossen.
+
+
+Die Deinstallation wurde gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Deinstallation ist abgeschlossen.
+
+Eine transaktive Installation wird ausgeführt.
+
+Die Installationsphase wird gestartet.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Installationsphase ist abgeschlossen, und die Commitphase beginnt.
+Die Protokolldatei enthält den Fortschritt der Assembly D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.
+Die Datei befindet sich in D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.InstallLog.
+
+Die Commitphase wurde erfolgreich abgeschlossen.
+
+Die transaktive Installation ist abgeschlossen.

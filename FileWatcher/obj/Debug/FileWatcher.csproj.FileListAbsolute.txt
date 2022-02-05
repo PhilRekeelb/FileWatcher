@@ -1,0 +1,10 @@
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Debug\FileWatcher.exe.config
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Debug\FileWatcher.exe
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Debug\FileWatcher.pdb
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.FileWatcher.resources
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.GenerateResource.cache
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.CoreCompileInputs.cache
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.exe
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.pdb
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Debug\FileWatcher.ProjectInstaller.resources
