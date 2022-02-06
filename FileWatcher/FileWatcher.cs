@@ -23,27 +23,31 @@ namespace FileWatcher
         {
             InitializeComponent();
 
-            NewMethod();
+            InitializeEventLog();
 
         }
-
-        private void NewMethod()
+        private void InitializeEventLog()
         {
             try
             {
-                eventLog = new System.Diagnostics.EventLog();
-                if (!System.Diagnostics.EventLog.SourceExists(EVENTSOURCE))
-                {
-                    System.Diagnostics.EventLog.CreateEventSource(EVENTSOURCE, LOGNAME);
-                }
-
-                eventLog.Source = EVENTSOURCE;
-                eventLog.Log = LOGNAME;
+                CreateAndAssignEventSource();
             }
             catch (Exception ex)
             {
                 EventLog.WriteEntry(LOGNAME, ex.ToString(), EventLogEntryType.Error);
             }
+        }
+
+        private void CreateAndAssignEventSource()
+        {
+            eventLog = new System.Diagnostics.EventLog();
+            if (!System.Diagnostics.EventLog.SourceExists(EVENTSOURCE))
+            {
+                System.Diagnostics.EventLog.CreateEventSource(EVENTSOURCE, LOGNAME);
+            }
+
+            eventLog.Source = EVENTSOURCE;
+            eventLog.Log = LOGNAME;
         }
 
         protected override void OnStart(string[] args)
