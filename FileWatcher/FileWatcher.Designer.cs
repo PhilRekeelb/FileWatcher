@@ -36,6 +36,8 @@
             // fileSystemWatcher
             // 
             this.fileSystemWatcher.EnableRaisingEvents = true;
+            this.fileSystemWatcher.Filter = "*.zip";
+            this.fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
             this.fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
             this.fileSystemWatcher.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Created);
             // 

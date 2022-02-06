@@ -55,6 +55,7 @@
     <Compile Include="FileWatcher.Designer.cs">
       <DependentUpon>FileWatcher.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileWatcherConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
