@@ -8,6 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace FileWatcher
 {
@@ -18,6 +19,7 @@ namespace FileWatcher
         private static String LOGNAME = "Application";
         private static String SOURCEPATH = @"D:\Downloads";
         private static String DESTINATIONPATH = @"D:\Downloads\Spiele";
+        private static String FILTER = "*.zip";
 
         public FileWatcher()
         {
@@ -57,19 +59,24 @@ namespace FileWatcher
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+            SetupFileSystemWatcher();
+
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+        }
+
+        private void SetupFileSystemWatcher()
+        {
             if (System.IO.Directory.Exists(SOURCEPATH))
             {
                 fileSystemWatcher.Path = SOURCEPATH;
             }
 
-            eventLog.WriteEntry("Filewatcher started!");
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            fileSystemWatcher.Filter = FILTER;
         }
 
         protected override void OnStop()
         {
-            eventLog.WriteEntry("Filewatcher terminated!");
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -81,32 +88,42 @@ namespace FileWatcher
         private void fileSystemWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
         {
             eventLog.WriteEntry("File '" + e.FullPath + "' created!");
-
         }
 
         private void fileSystemWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
         {
             eventLog.WriteEntry("File '" + e.FullPath + "' changed!");
+
+            CreateDestinationPath();
+
+            if (!IsFileLocked(e.FullPath))
+            {
+                MoveFileFromToDestination(e);
+            }
+        }
+
+        private void MoveFileFromToDestination(FileSystemEventArgs e)
+        {
+            try
+            {
+                if (System.IO.File.Exists(DESTINATIONPATH + @"\" + e.Name))
+                    System.IO.File.Delete(DESTINATIONPATH + @"\" + e.Name);
+
+                System.IO.File.Move(e.FullPath, DESTINATIONPATH + @"\" + e.Name);
+            }
+            catch (Exception ex)
+            {
+                eventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error);
+            }
+        }
+
+        private void CreateDestinationPath()
+        {
             if (!System.IO.Directory.Exists(DESTINATIONPATH))
             {
                 try
                 {
                     System.IO.Directory.CreateDirectory(DESTINATIONPATH);
-                }
-                catch(Exception ex)
-                {
-                    eventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error);
-                }
-            }
-
-            if (!IsFileLocked(e.FullPath))
-            { 
-                try
-                {
-                    if (System.IO.File.Exists(DESTINATIONPATH + @"\" + e.Name))
-                        System.IO.File.Delete(DESTINATIONPATH + @"\" + e.Name);
-
-                    System.IO.File.Move(e.FullPath, DESTINATIONPATH + @"\" + e.Name);
                 }
                 catch (Exception ex)
                 {
@@ -114,6 +131,7 @@ namespace FileWatcher
                 }
             }
         }
+
         public bool IsFileLocked(string filename)
         {
             bool Locked = false;
