@@ -1,6 +1,6 @@
 ﻿namespace FileWatcher
 {
-    partial class FileWatcher
+    partial class FileWatcherService
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -29,29 +29,17 @@
         private void InitializeComponent()
         {
             this.eventLog = new System.Diagnostics.EventLog();
-            this.fileSystemWatcher = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher)).BeginInit();
-            // 
-            // fileSystemWatcher
-            // 
-            this.fileSystemWatcher.EnableRaisingEvents = true;
-            this.fileSystemWatcher.Filter = "*.zip";
-            this.fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-            this.fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
-            this.fileSystemWatcher.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Created);
             // 
             // FileWatcher
             // 
             this.ServiceName = "FileWatcher";
             ((System.ComponentModel.ISupportInitialize)(this.eventLog)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher)).EndInit();
 
         }
 
         #endregion
 
         private System.Diagnostics.EventLog eventLog;
-        private System.IO.FileSystemWatcher fileSystemWatcher;
     }
 }

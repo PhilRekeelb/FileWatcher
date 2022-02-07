@@ -17,7 +17,7 @@ namespace FileWatcher
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new FileWatcher()
+                new FileWatcherService()
             };
             ServiceBase.Run(ServicesToRun);
         }

@@ -13,15 +13,16 @@ using System.IO;
 namespace FileWatcher
 {
     //https://docs.microsoft.com/de-de/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
-    public partial class FileWatcher : ServiceBase
+    public partial class FileWatcherService : ServiceBase
     {
         private static String EVENTSOURCE = "FileWatcher";
         private static String LOGNAME = "Application";
-        private static String SOURCEPATH = @"D:\Downloads";
-        private static String DESTINATIONPATH = @"D:\Downloads\Spiele";
-        private static String FILTER = "*.zip";
 
-        public FileWatcher()
+        private static String CONFIGPATH = @"C:\Temp\";
+
+        private List<FileWatcherObject> fileWatchers;
+
+        public FileWatcherService()
         {
             InitializeComponent();
 
@@ -59,20 +60,34 @@ namespace FileWatcher
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            SetupFileSystemWatcher();
 
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-        }
-
-        private void SetupFileSystemWatcher()
-        {
-            if (System.IO.Directory.Exists(SOURCEPATH))
+            if (System.IO.Directory.Exists(CONFIGPATH))
             {
-                fileSystemWatcher.Path = SOURCEPATH;
-            }
+                String[] ConfigurationFiles = System.IO.Directory.GetFiles(CONFIGPATH, "*.json");
 
-            fileSystemWatcher.Filter = FILTER;
+                if (ConfigurationFiles.Length > 0)
+                {
+                    foreach (String file in ConfigurationFiles)
+                    {
+                        try
+                        {
+                            FileWatcherObject fileWatcher = new FileWatcherObject(file, eventLog);
+                            
+                            eventLog.WriteEntry(fileWatcher.ToString());
+
+                            fileWatcher.ReadConfigFile();
+                            fileWatcher.SetupFileSystemWatcher();
+
+                            fileWatchers.Add(fileWatcher);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                }
+                serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
+                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            }
         }
 
         protected override void OnStop()
@@ -85,69 +100,6 @@ namespace FileWatcher
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(System.IntPtr handle, ref ServiceStatus serviceStatus);
 
-        private void fileSystemWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
-        {
-            eventLog.WriteEntry("File '" + e.FullPath + "' created!");
-        }
-
-        private void fileSystemWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
-        {
-            eventLog.WriteEntry("File '" + e.FullPath + "' changed!");
-
-            CreateDestinationPath();
-
-            if (!IsFileLocked(e.FullPath))
-            {
-                MoveFileFromToDestination(e);
-            }
-        }
-
-        private void MoveFileFromToDestination(FileSystemEventArgs e)
-        {
-            try
-            {
-                if (System.IO.File.Exists(DESTINATIONPATH + @"\" + e.Name))
-                    System.IO.File.Delete(DESTINATIONPATH + @"\" + e.Name);
-
-                System.IO.File.Move(e.FullPath, DESTINATIONPATH + @"\" + e.Name);
-            }
-            catch (Exception ex)
-            {
-                eventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error);
-            }
-        }
-
-        private void CreateDestinationPath()
-        {
-            if (!System.IO.Directory.Exists(DESTINATIONPATH))
-            {
-                try
-                {
-                    System.IO.Directory.CreateDirectory(DESTINATIONPATH);
-                }
-                catch (Exception ex)
-                {
-                    eventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error);
-                }
-            }
-        }
-
-        public bool IsFileLocked(string filename)
-        {
-            bool Locked = false;
-            try
-            {
-                System.IO.FileStream fs =
-                            System.IO.File.Open(filename, System.IO.FileMode.OpenOrCreate,
-                            System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
-                fs.Close();
-            }
-            catch (System.IO.IOException ex)
-            {
-                Locked = true;
-            }
-            return Locked;
-        }
     }
 
     public enum ServiceState
@@ -172,7 +124,4 @@ namespace FileWatcher
         public int dwCheckPoint;
         public int dwWaitHint;
     };
-
-
-
 }

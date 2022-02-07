@@ -1,9 +1,13 @@
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe.config
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.exe
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\FileWatcher.pdb
-D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.FileWatcher.resources
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.ProjectInstaller.resources
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.csproj.GenerateResource.cache
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.csproj.CoreCompileInputs.cache
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.exe
 D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.pdb
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\Newtonsoft.Json.dll
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\bin\Release\Newtonsoft.Json.xml
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.csproj.CopyComplete
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.csprojAssemblyReference.cache
+D:\Dev\04_C#\Services\FileWatcher\FileWatcher\obj\Release\FileWatcher.FileWatcherService.resources
