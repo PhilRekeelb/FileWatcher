@@ -9,7 +9,7 @@
 *.sdf
 *.cachefile
 
-# Visual Studio foldes
+# Visual Studio folders
 FileWatcher/bin/
 .vs/
 
