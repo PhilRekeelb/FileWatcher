@@ -13,15 +13,9 @@ namespace FileWatcher
         private String destinationpath = @"D:\Downloads\";
         private String filter = "*.zip";
         private String configurationPath;
+
         private System.IO.FileSystemWatcher fileSystemWatcher;
         private System.Diagnostics.EventLog eventLog;
-
-        public FileWatcherObject(string sourcepath, string destinationpath, string filter)
-        {
-            this.sourcepath = sourcepath;
-            this.destinationpath = destinationpath;
-            this.filter = filter;
-        }
 
         public FileWatcherObject(string configpath, System.Diagnostics.EventLog eventLog)
         {
@@ -32,8 +26,9 @@ namespace FileWatcher
             { 
                 ReadConfigFile();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                eventLog.WriteEntry(ex.ToString(), System.Diagnostics.EventLogEntryType.Error);
             }
             
         }
@@ -63,7 +58,7 @@ namespace FileWatcher
                 fileSystemWatcher.Path = this.sourcepath;
                 fileSystemWatcher.Filter = this.filter;
                 fileSystemWatcher.EnableRaisingEvents = true;
-                fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+                fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastAccess | System.IO.NotifyFilters.LastWrite;
                 fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
                 fileSystemWatcher.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Created);
             }
@@ -71,6 +66,14 @@ namespace FileWatcher
 
         private void fileSystemWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
         {
+            eventLog.WriteEntry("File '" + e.FullPath + "' changed!");
+
+            CreateDestinationPath();
+
+            if (!IsFileLocked(e.FullPath))
+            {
+                MoveFileToDestination(e);
+            }
         }
 
         private void fileSystemWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)

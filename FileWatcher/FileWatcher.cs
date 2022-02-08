@@ -75,7 +75,6 @@ namespace FileWatcher
                             
                             eventLog.WriteEntry(fileWatcher.ToString());
 
-                            fileWatcher.ReadConfigFile();
                             fileWatcher.SetupFileSystemWatcher();
 
                             fileWatchers.Add(fileWatcher);
