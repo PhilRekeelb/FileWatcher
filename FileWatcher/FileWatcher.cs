@@ -1,126 +1,143 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.IO;
 
 namespace FileWatcher
 {
-    //https://docs.microsoft.com/de-de/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
-    public partial class FileWatcherService : ServiceBase
+    class FileWatcher
     {
-        private static String EVENTSOURCE = "FileWatcher";
-        private static String LOGNAME = "Application";
+        private String sourcepath = @"D:\Downloads\";
+        private String destinationpath = @"D:\Downloads\";
+        private String filter = "*.zip";
+        private String configurationPath;
 
-        private static String CONFIGPATH = @"C:\Temp\";
+        private System.IO.FileSystemWatcher fileSystemWatcher;
+        private System.Diagnostics.EventLog eventLog;
 
-        private List<FileWatcherObject> fileWatchers;
-
-        public FileWatcherService()
+        public FileWatcher(string configpath, System.Diagnostics.EventLog eventLog)
         {
-            InitializeComponent();
+            this.configurationPath = configpath;
+            this.eventLog = eventLog;
 
-            InitializeEventLog();
-
+            try
+            { 
+                ReadConfigFile();
+            }
+            catch(Exception ex)
+            {
+                eventLog.WriteEntry(ex.ToString(), System.Diagnostics.EventLogEntryType.Error);
+            }
+            
         }
-        private void InitializeEventLog()
+
+        public void ReadConfigFile()
+        {
+            if (System.IO.File.Exists(this.configurationPath))
+            {
+                // read JSON directly from a file
+                using (System.IO.StreamReader file = System.IO.File.OpenText(this.configurationPath))
+                using (JsonTextReader reader = new JsonTextReader(file))
+                {
+                    Newtonsoft.Json.Linq.JObject o2 = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.Linq.JToken.ReadFrom(reader);
+
+                    this.sourcepath = o2["source"].ToString();
+                    this.destinationpath = o2["destination"].ToString();
+                    this.filter = o2["filter"].ToString();
+                }
+            }
+        }
+
+        public void SetupFileSystemWatcher()
+        {
+            if (System.IO.Directory.Exists(this.sourcepath))
+            {
+                this.fileSystemWatcher = new System.IO.FileSystemWatcher();
+                fileSystemWatcher.Path = this.sourcepath;
+                fileSystemWatcher.Filter = this.filter;
+                fileSystemWatcher.EnableRaisingEvents = true;
+                fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastAccess | System.IO.NotifyFilters.LastWrite;
+                fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
+                fileSystemWatcher.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Created);
+            }
+        }
+
+        private void fileSystemWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
+        {
+            eventLog.WriteEntry("File '" + e.FullPath + "' changed!");
+
+            CreateDestinationPath();
+
+            if (!IsFileLocked(e.FullPath))
+            {
+                MoveFileToDestination(e);
+            }
+        }
+
+        private void fileSystemWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
+        {
+            eventLog.WriteEntry("File '" + e.FullPath + "' changed!");
+
+            CreateDestinationPath();
+
+            if (!IsFileLocked(e.FullPath))
+            {
+                MoveFileToDestination(e);
+            }
+        }
+
+        private void CreateDestinationPath()
+        {
+            if (!System.IO.Directory.Exists(destinationpath))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(destinationpath);
+                }
+                catch (Exception ex)
+                {
+                    eventLog.WriteEntry(ex.ToString(), System.Diagnostics.EventLogEntryType.Error);
+                }
+            }
+        }
+        private void MoveFileToDestination(System.IO.FileSystemEventArgs e)
         {
             try
             {
-                CreateAndAssignEventSource();
+                if (System.IO.File.Exists(destinationpath + e.Name))
+                    System.IO.File.Delete(destinationpath + e.Name);
+
+                System.IO.File.Move(e.FullPath, destinationpath + e.Name);
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(LOGNAME, ex.ToString(), EventLogEntryType.Error);
+                eventLog.WriteEntry(ex.ToString(), System.Diagnostics.EventLogEntryType.Error);
             }
         }
 
-        private void CreateAndAssignEventSource()
+
+        public bool IsFileLocked(string filename)
         {
-            eventLog = new System.Diagnostics.EventLog();
-            if (!System.Diagnostics.EventLog.SourceExists(EVENTSOURCE))
+            bool Locked = false;
+            try
             {
-                System.Diagnostics.EventLog.CreateEventSource(EVENTSOURCE, LOGNAME);
+                System.IO.FileStream fs =
+                            System.IO.File.Open(filename, System.IO.FileMode.OpenOrCreate,
+                            System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
+                fs.Close();
             }
-
-            eventLog.Source = EVENTSOURCE;
-            eventLog.Log = LOGNAME;
-        }
-
-        protected override void OnStart(string[] args)
-        {
-            ServiceStatus serviceStatus = new ServiceStatus();
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
-            serviceStatus.dwWaitHint = 100000;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-
-
-            if (System.IO.Directory.Exists(CONFIGPATH))
+            catch (System.IO.IOException)
             {
-                String[] ConfigurationFiles = System.IO.Directory.GetFiles(CONFIGPATH, "*.json");
-
-                if (ConfigurationFiles.Length > 0)
-                {
-                    foreach (String file in ConfigurationFiles)
-                    {
-                        try
-                        {
-                            FileWatcherObject fileWatcher = new FileWatcherObject(file, eventLog);
-                            
-                            eventLog.WriteEntry(fileWatcher.ToString());
-
-                            fileWatcher.SetupFileSystemWatcher();
-
-                            fileWatchers.Add(fileWatcher);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-                }
-                serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
-                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+                Locked = true;
             }
+            return Locked;
         }
 
-        protected override void OnStop()
+        override public String ToString()
         {
-            ServiceStatus serviceStatus = new ServiceStatus();
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            return this.configurationPath + ":\n\nsource: '" + this.sourcepath + "'\ndestination: '" + this.destinationpath + "'\nfilter: '" + this.filter + "'";
         }
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern bool SetServiceStatus(System.IntPtr handle, ref ServiceStatus serviceStatus);
-
     }
-
-    public enum ServiceState
-    {
-        SERVICE_STOPPED = 0x00000001,
-        SERVICE_START_PENDING = 0x00000002,
-        SERVICE_STOP_PENDING = 0x00000003,
-        SERVICE_RUNNING = 0x00000004,
-        SERVICE_CONTINUE_PENDING = 0x00000005,
-        SERVICE_PAUSE_PENDING = 0x00000006,
-        SERVICE_PAUSED = 0x00000007,
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ServiceStatus
-    {
-        public int dwServiceType;
-        public ServiceState dwCurrentState;
-        public int dwControlsAccepted;
-        public int dwWin32ExitCode;
-        public int dwServiceSpecificExitCode;
-        public int dwCheckPoint;
-        public int dwWaitHint;
-    };
 }
